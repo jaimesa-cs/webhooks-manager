@@ -9,10 +9,15 @@ You will need a .env file in the root of your directory with the following varia
 
 ```bash
 NODE_ENV=development
-CS_MANAGEMENT_TOKEN=<your_cm_token>
-CS_API_KEY=<your_api_key>
-CS_API_BASE_URL=https://api.contentstack.io
+CS_CD_TOKEN=<your_cd_token>
+CS_CD_API_KEY=<your_api_key>
+CS_CM_TOKEN=<your_cm_token>
+CS_CM_API_KEY=<your_api_key>
+CS_CM_API_BASE_URL=https://api.contentstack.io
+CS_CD_API_BASE_URL=https://cdn.contentstack.io
 DEFAULT_FILE_LOCATION=<your_directory_to_save_payloads>
+PREVIEW_ASSET_FOLDER=<your_asset_folder_uri>
+
 ```
 
 At this point you can hit your local endpoints with a POST request using POSTMAN. Here is an example "publishing" payload for your reference:
