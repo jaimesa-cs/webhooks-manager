@@ -4,7 +4,7 @@ import WebhookController from "./controllers/WebhookController";
 import { container } from "tsyringe";
 import express from "express";
 
-const port = process.env.port || 4000;
+const port = process.env.port || 4001;
 
 const app = express();
 

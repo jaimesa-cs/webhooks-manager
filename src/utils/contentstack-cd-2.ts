@@ -15,10 +15,6 @@ export const getDefaultAxiosOptions = (options: AxiosRequestConfig<any>): AxiosR
   };
 };
 
-export const getJsonUniquePath = (id: string) => {
-  return `${env.DEFAULT_FILE_LOCATION}/${id}.json`;
-};
-
 export const getEntry = async (contentTypeUid: string, uid: string, environment: string, includes?: string[]) => {
   const options = getDefaultAxiosOptions({ method: "GET" });
   let url = `${env.CS_CD_API_BASE_URL}/v3/content_types/${contentTypeUid}/entries/${uid}?environment=${environment}`;

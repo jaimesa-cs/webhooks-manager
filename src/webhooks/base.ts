@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import { getEntry, getEntryWorkflowDetails, getJsonUniquePath } from "../utils/contentstack-cm";
 
 import { IWebhook } from "../interfaces/IWebhook";
 import fs from "fs";
-import { getJsonUniquePath } from "../utils/contentstack-cm";
 
 export default abstract class BaseWebhook implements IWebhook {
   id: string;
@@ -27,6 +27,7 @@ export default abstract class BaseWebhook implements IWebhook {
   }
 
   getHeader(name: string): string {
+    // console.log(this.request.headers);
     if (this.request.headers.hasOwnProperty(name)) {
       return this.request.headers[name].toString();
     }
@@ -37,10 +38,14 @@ export default abstract class BaseWebhook implements IWebhook {
     return JSON.parse(this.request.body);
   }
 
+  getRequestBody(): any {
+    return this.request.body;
+  }
+
   prepare() {}
 
-  success<T>(payload?: string | T) {
-    this.response.status(200).send(payload || "OK");
+  success<T>(payload?: string | T, status: number = 200) {
+    this.response.status(status).send(payload || "OK");
   }
   error<T>(payload?: string | T) {
     this.response.status(500).send(payload || "ERROR");
@@ -49,16 +54,40 @@ export default abstract class BaseWebhook implements IWebhook {
   async savePayload() {
     try {
       const payload = this.getPayload<any>();
-      this.serializeObject(payload.data.entry.uid, payload);
+      const uid = payload.data?.entry?.uid || payload.data?.workflow?.entry?.uid;
+      this.serializeObject(uid, payload);
+      return payload;
     } catch (e) {
       console.log(e);
+      return null;
+    }
+  }
+
+  async saveWorkflowDetails() {
+    try {
+      const payload = this.getPayload<any>();
+      const uid = payload.data?.workflow?.entry?.uid;
+      if (!uid) {
+        this.serializeObject(`${uid}_wf_details`, {
+          error: "Not able to save entry workflow details",
+          payload: payload,
+        });
+      } else {
+        const entryDetails = getEntryWorkflowDetails(payload.data.workflow.content_type.uid, uid);
+        this.serializeObject(uid, entryDetails);
+      }
+
+      return payload;
+    } catch (e) {
+      console.log(e);
+      return null;
     }
   }
 
   async serializeObject(id: string, obj: any) {
     try {
       const now = new Date();
-      const filename = `${id}_${now.toLocaleDateString()}_${now.toLocaleTimeString()}.json`;
+      const filename = `${id}_${now.toLocaleDateString()}_${now.toLocaleTimeString()}`;
       const target = getJsonUniquePath(filename.replace(/\//g, "-").replace(/\s/g, "-").replace(/:/g, "-"));
       fs.writeFile(target, JSON.stringify(obj), (err) => {
         if (err) {

@@ -44,7 +44,7 @@ export default class GeneratePPTPreview extends BaseWebhook {
       const contentTypeUid = payload.data.content_type.uid;
 
       const includes: string[] = includeHeader && includeHeader !== "" ? includeHeader.split(",") : []; // ["metadata.metadata", "metadata.business_priorities"];
-      console.log(includes);
+      // console.log(includes);
       const entry = await getEntry(contentTypeUid, entryUid, payload.data.environment.name, includes);
 
       //2. Generate a pptx file
@@ -53,8 +53,10 @@ export default class GeneratePPTPreview extends BaseWebhook {
       //3. Save it back as an asset in Contentstack
       const response = await saveAsset(filename, contentTypeUid, entryUid);
 
-      //4. Return the asset url
-      this.success(response);
+      //4. Generate PDF
+
+      //5. Return the asset url
+      this.success();
     } catch (e) {
       console.log("Something went wrong!");
       //   console.log(e);

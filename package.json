@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.1.0",
+    "@google-cloud/translate": "^6.3.1",
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.1",
@@ -30,6 +31,7 @@
     "fs": "^0.0.1-security",
     "pptxgenjs": "^3.9.0",
     "reflect-metadata": "^0.1.13",
+    "ts-retry": "^2.4.0",
     "tsyringe": "^4.4.0"
   }
 }

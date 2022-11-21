@@ -106,3 +106,6 @@ dist
 
 # Other directories to ignore
 data
+key.json
+src/webhooks/public.key
+src/utils/credentials.ts
