@@ -15,10 +15,10 @@ export default function useEnvironment() {
     DEFAULT_FILE_LOCATION: process.env.DEFAULT_FILE_LOCATION || "",
   };
   // if (process.env.NODE_ENV && process.env.NODE_ENV === "development") {
-  console.log("LOADING DEVELOPMENT ENVIRONMENT");
-  console.log("Environment ------------------------------------------------ ");
-  console.log(values);
-  console.log("------------------------------------------------ Environment ");
+  // console.log("LOADING DEVELOPMENT ENVIRONMENT");
+  // console.log("Environment ------------------------------------------------ ");
+  // console.log(values);
+  // console.log("------------------------------------------------ Environment ");
   // }
 
   return values;
