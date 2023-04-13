@@ -61,7 +61,7 @@ export default class ExpireContent extends BaseWebhook {
         await schedulePublishing("Unpublish", contentTypeUid, entryUid, version, locale, unpublishAt, environment)
       );
     } else {
-      //If the date field is not found, do nothing
+      //If the date field is not found, do nothing.
       this.success("No scheduled date found");
     }
   }
