@@ -18,7 +18,7 @@ Schedules an unpublish action for the entry at a specific date, provided in a fi
 
    Path to expiration date: `#root > content_lifecycle > expiration_date`
 
-   ```json
+   ```javascript
    {
     _version: 79,
     locale: 'en-us',
