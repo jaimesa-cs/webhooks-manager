@@ -1,12 +1,12 @@
 import DummyWebhook from "./webhooks/dummy";
 import Elasticsearch from "./webhooks/elasticsearch";
+import ExpireContent from "./webhooks/expire-content";
 import GeneratePPTPreview from "./webhooks/generate-ppt-preview";
 import GetEntry from "./webhooks/get-entry";
 import GetReferences from "./webhooks/get-references";
 import GoogleCloudTranslate from "./webhooks/gc-translate";
 import GoogleCloudTranslateDocument from "./webhooks/gc-translate-document";
 import LogPayload from "./webhooks/log-payload";
-import UnpublishAt from "./webhooks/unpublish-at";
 import VerifyWebhookRequest from "./webhooks/verify";
 import WorkflowApprovalValidationWebhook from "./webhooks/workflow-approval";
 import { container } from "tsyringe";
@@ -18,7 +18,7 @@ const webhooks = {
   "get-entry": GetEntry,
   elasticsearch: Elasticsearch,
   "generate-ppt-preview": GeneratePPTPreview,
-  "unpublish-at": UnpublishAt,
+  "expire-content": ExpireContent,
   "gc-translate": GoogleCloudTranslate,
   "gc-translate-document": GoogleCloudTranslateDocument,
   "verify-webhook-request": VerifyWebhookRequest,

@@ -129,15 +129,15 @@ export const schedulePublishing = async (
   contentTypeUid: string,
   entryUid: string,
   version: number,
-  locales: string[],
+  locale: string,
   date: string,
   environment: string
 ) => {
   switch (operation) {
     case "Publish":
-      return schedulePublish(contentTypeUid, entryUid, version, locales, date, environment);
+      return schedulePublish(contentTypeUid, entryUid, version, locale, date, environment);
     case "Unpublish":
-      return scheduleUnpublish(contentTypeUid, entryUid, version, locales, date, environment);
+      return scheduleUnpublish(contentTypeUid, entryUid, version, locale, date, environment);
   }
 };
 
@@ -145,7 +145,7 @@ const schedulePublish = async (
   contentTypeUid: string,
   entryUid: string,
   version: number,
-  locales: string[],
+  locale: string,
   date: string,
   environment: string
 ) => {
@@ -157,7 +157,7 @@ const scheduleUnpublish = async (
   contentTypeUid: string,
   entryUid: string,
   version: number,
-  locales: string[],
+  locale: string,
   date: string,
   environment: string
 ) => {
@@ -165,20 +165,25 @@ const scheduleUnpublish = async (
   const data = {
     entry: {
       environments: [environment],
-      locales: locales,
+      locales: [locale],
     },
-    locale: locales[0],
+    locale: locale,
     version: version,
     scheduled_at: date,
   };
   const options = getDefaultAxiosOptions({ method: "POST", data: data });
 
-  const response = await axios(
-    `${env.CS_CM_API_BASE_URL}/v3/content_types/${contentTypeUid}/entries/${entryUid}/unpublish`,
-    options
-  );
-  console.log("Status", response.status);
-  return Promise.resolve(response.status);
+  try {
+    const response = await axios(
+      `${env.CS_CM_API_BASE_URL}/v3/content_types/${contentTypeUid}/entries/${entryUid}/unpublish`,
+      options
+    );
+    console.log("Status", response.status);
+    return Promise.resolve(response.status);
+  } catch (e) {
+    console.log("Error", e);
+    return Promise.reject(e);
+  }
 };
 
 export const updateWorkflowWithCredentials = async (
@@ -282,4 +287,26 @@ export const localizeEntry = async (contentTypeUid: string, entryUid: string, lo
   }
 
   return Promise.resolve("");
+};
+
+export const deleteAllScheduledItemsForEntry = async (entryUid: string, locale: string, environment: string) => {
+  console.log("Deleting scheduled items for entry: ", entryUid, " in (l) ", locale, " in (e) ", environment);
+
+  const options = getDefaultAxiosOptions({ method: "GET" });
+
+  try {
+    const query = `{"$and":[{"entry.uid":"${entryUid}"}, {"publish_details.status":"scheduled"}, {"action":"unpublish"}, {"locale":"${locale}"}}, {"environment":{"${environment}"}}]}`;
+    const url = `${env.CS_CM_API_BASE_URL}/v3/publish-queue?query=${encodeURI(query)}`;
+    const response = await axios(url, options);
+
+    if (response && response.data && response.data.queue && response.data.queue.length > 0) {
+      response.data.queue.forEach(async (q) => {
+        await axios(`${env.CS_CM_API_BASE_URL}/v3/publish-queue/${q.uid}/unschedule`, options);
+      });
+    }
+    return Promise.resolve(response.status);
+  } catch (e) {
+    console.log("Error", e);
+    return Promise.reject(e);
+  }
 };

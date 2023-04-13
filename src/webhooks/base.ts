@@ -45,10 +45,10 @@ export default abstract class BaseWebhook implements IWebhook {
   prepare() {}
 
   success<T>(payload?: string | T, status: number = 200) {
-    this.response.status(status).send(payload || "OK");
+    this.response.status(200).json(payload || "OK");
   }
   error<T>(payload?: string | T) {
-    this.response.status(500).send(payload || "ERROR");
+    this.response.status(500).json(payload || "ERROR");
   }
 
   async savePayload() {
