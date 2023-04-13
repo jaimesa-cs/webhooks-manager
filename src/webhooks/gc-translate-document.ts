@@ -4,6 +4,9 @@ import BaseWebhook from "./base";
 import { TranslationServiceClient } from "@google-cloud/translate";
 import { google } from "@google-cloud/translate/build/protos/protos";
 
+/**
+ * Translates a document using Google Cloud Translation
+ */
 export default class GoogleCloudTranslateDocument extends BaseWebhook {
   id: string = "gc-translate-document";
   description: string = "Use Google Cloud Translate to translate a document";

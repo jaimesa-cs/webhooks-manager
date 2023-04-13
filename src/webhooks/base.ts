@@ -4,6 +4,9 @@ import { getEntry, getEntryWorkflowDetails, getJsonUniquePath } from "../utils/c
 import { IWebhook } from "../interfaces/IWebhook";
 import fs from "fs";
 
+/**
+ * Base class for all webhooks
+ */
 export default abstract class BaseWebhook implements IWebhook {
   id: string;
   description: string;

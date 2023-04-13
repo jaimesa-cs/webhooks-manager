@@ -1,6 +1,9 @@
 import BaseWebhook from "./base";
 import { getEntry } from "../utils/contentstack-cm";
 
+/**
+ * Returns the entry
+ */
 export default class GetEntry extends BaseWebhook {
   id: string = "get-entry";
   description: string = "Get entry webhook";

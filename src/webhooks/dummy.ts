@@ -1,5 +1,8 @@
 import BaseWebhook from "./base";
 
+/**
+ * Dummy webhook
+ */
 export default class DummyWebhook extends BaseWebhook {
   id: string = "dummy";
   description: string = "Dummy webhook";

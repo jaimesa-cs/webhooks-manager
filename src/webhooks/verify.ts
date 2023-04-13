@@ -1,6 +1,9 @@
 import BaseWebhook from "./base";
 const crypto = require("crypto");
 
+/**
+ * Verify Webhook Requests
+ */
 export default class VerifyWebhookRequest extends BaseWebhook {
   id: string = "verify-webhook-request";
   description: string = "Verify Webhook Requests";

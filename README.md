@@ -1,6 +1,17 @@
 # Easy Webhooks Using Dependency Injection
 
+## TSYRINGE
+
 Basic project using https://www.npmjs.com/package/tsyringe to help with dependency injection.
+
+Main configuration for `tsyringe` resides on the `src/registration.ts` file.
+Then, the `WebhookController` class located at `src/controllers/WebhookController.ts` relies on such configuration to distribute calls.
+
+## EXPRESS
+
+The project relies on `express` as the server. https://expressjs.com/
+
+Main configuration for `express` resides on the `src/index.ts` file.
 
 ## Run locally
 
@@ -89,3 +100,7 @@ Contentstack doesn't allow you to use "local" urls for your webhooks (localhost,
 This will allow you to use an `https` url that will point to your locally running instance so you can demo/show webhooks. Keep in mind that ngrok doesn't persist the urls, so every day (or every so often) the webhook url can change and you will need to update it in Contentstack prior to demo it.
 
 For further details please reach out to jaime@contentstack.com.
+
+### Webhook-Specific Readme
+
+For each webhook look for a dedicated readme file under the docs/`<webhook-id>` folder. e.g. /docs/dummy/README.md, would be the reade for the `dummy.ts` webhook.

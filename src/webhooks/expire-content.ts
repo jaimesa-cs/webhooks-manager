@@ -4,7 +4,7 @@ import BaseWebhook from "./base";
 
 export default class ExpireContent extends BaseWebhook {
   id: string = "expire-content";
-  description: string = "Unpublish and entry at a specific date, provided in a field";
+  description: string = "Schedules an unpublish action for the entry at a specific date, provided in a field";
   constructor() {
     super();
   }
@@ -14,7 +14,9 @@ export default class ExpireContent extends BaseWebhook {
     //When bulk publishing, multiple publishing actions are triggered, and the webhook is called for each action (individual entry on a specific locale and environment).
     //Check your webhook settings in Contentstack
     const payload = this.getPayload<any>();
-    console.log(payload);
+
+    //Uncomment this line to see the payload
+    //console.log("Payload", payload);
 
     //Environment name
     const environment = payload.data.environment.name;

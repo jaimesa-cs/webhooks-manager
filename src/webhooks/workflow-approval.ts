@@ -3,6 +3,9 @@ import { pass, user } from "../utils/credentials";
 
 import BaseWebhook from "./base";
 
+/**
+ * Workflow Approval Validation Webhook. It prevents the same person from approving their own changes.
+ */
 export default class WorkflowApprovalValidationWebhook extends BaseWebhook {
   id: string = "workflow-approval";
   description: string = "Workflow Approval Webhook";

@@ -2,6 +2,9 @@ import BaseWebhook from "./base";
 import { Client } from "@elastic/elasticsearch";
 import { getEntry } from "../utils/contentstack-cm";
 
+/**
+ * Indexes entry in Elasticsearch
+ */
 export default class Elasticsearch extends BaseWebhook {
   id: string = "elasticsearch";
   description: string = "Elasticsearch webhook";

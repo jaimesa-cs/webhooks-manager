@@ -3,6 +3,9 @@ import { getEntry, getEntryForLocale, localizeEntry, updateEntry, updateWorkflow
 import BaseWebhook from "./base";
 import { TranslationServiceClient } from "@google-cloud/translate";
 
+/**
+ * Translates an entry using Google Cloud Translation and then updates the entry back in Contentstack
+ */
 export default class GoogleCloudTranslate extends BaseWebhook {
   id: string = "gc-translate";
   description: string = "Use Google Cloud Translate to translate text";
@@ -38,17 +41,6 @@ export default class GoogleCloudTranslate extends BaseWebhook {
           locale: locale,
         },
       };
-      //   console.log(
-      //     "Updating entry: ",
-      //     langEntry.uid,
-      //     "of contentType:",
-      //     contentTypeUid,
-      //     " with locale:",
-      //     locale,
-      //     " with data:",
-      //     data
-      //   );
-
       const updatedEntry = await updateEntry(contentTypeUid, entryUid, locale, data);
       //   const updatedEntry = await localizeEntry(contentTypeUid, entryUid, locale, data);
       if (updatedEntry !== "") {

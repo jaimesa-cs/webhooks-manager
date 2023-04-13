@@ -1,3 +1,6 @@
+# Mac OS
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -109,3 +112,4 @@ data
 key.json
 src/webhooks/public.key
 src/utils/credentials.ts
+

@@ -4,6 +4,11 @@ import BaseWebhook from "./base";
 import axios from "axios";
 import useEnvironment from "../utils/environment";
 
+const env = useEnvironment();
+
+/**
+ * Gets the references of an entry
+ */
 export default class GetReferences extends BaseWebhook {
   id: string = "get-references";
   description: string = "Get references webhook";
@@ -16,7 +21,7 @@ export default class GetReferences extends BaseWebhook {
       const payload = this.getPayload<any>();
       const entryUid = payload.data.entry.uid;
       const contentTypeUid = payload.data.content_type.uid;
-      const env = useEnvironment();
+
       const options = getDefaultAxiosOptions({ method: "GET" });
       let response = await axios(
         `${env.CS_CM_API_BASE_URL}/v3/content_types/${contentTypeUid}/entries/${entryUid}/references`,

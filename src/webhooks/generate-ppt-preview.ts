@@ -6,6 +6,9 @@ import useEnvironment from "../utils/environment";
 
 const env = useEnvironment();
 
+/**
+ * Generates a dummy ppt with the entry json as comments
+ */
 export default class GeneratePPTPreview extends BaseWebhook {
   id: string = "generate-ppt-preview";
   description: string = "Generates a ppt and preview";
