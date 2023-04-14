@@ -292,15 +292,15 @@ export const localizeEntry = async (contentTypeUid: string, entryUid: string, lo
 export const deleteAllScheduledItemsForEntry = async (entryUid: string, locale: string, environment: string) => {
   console.log("Deleting scheduled items for entry: ", entryUid, " in (l) ", locale, " in (e) ", environment);
 
-  const options = getDefaultAxiosOptions({ method: "GET" });
+  const query = `{"$and":[{"entry.uid":"${entryUid}"}, {"publish_details.status":"scheduled"}, {"action":"unpublish"}, {"locale":"${locale}"}, {"environment":"${environment}"}]}`;
+  console.log("Query", query);
+  const options = getDefaultAxiosOptions({ method: "GET", params: { query: query } });
 
   try {
-    const query = `{"$and":[{"entry.uid":"${entryUid}"}, {"publish_details.status":"scheduled"}, {"action":"unpublish"}, {"locale":"${locale}"}}, {"environment":{"${environment}"}}]}`;
-    const url = `${env.CS_CM_API_BASE_URL}/v3/publish-queue?query=${encodeURI(query)}`;
-    const response = await axios(url, options);
-
+    const response = await axios(`${env.CS_CM_API_BASE_URL}/v3/publish-queue`, options);
     if (response && response.data && response.data.queue && response.data.queue.length > 0) {
       response.data.queue.forEach(async (q) => {
+        console.log("Unscheduling", q.uid);
         await axios(`${env.CS_CM_API_BASE_URL}/v3/publish-queue/${q.uid}/unschedule`, options);
       });
     }
